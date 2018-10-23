@@ -18,7 +18,7 @@ public class Rocket : MonoBehaviour {
 			print("Rotates right");
 		}
 		if (Input.GetKey(KeyCode.Space)) {
-			print("Thrusts");
+			rigidBody.AddRelativeForce(Vector3.up);
 		}
 	}
 }
