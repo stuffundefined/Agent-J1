@@ -8,6 +8,7 @@ public class Rocket : MonoBehaviour {
 	AudioSource audioSource;
 	void Start () {
 		rigidBody = GetComponent<Rigidbody>();
+		audioSource = GetComponent<AudioSource>();
 	}
 	void Update () {
 		ProcessInput();
