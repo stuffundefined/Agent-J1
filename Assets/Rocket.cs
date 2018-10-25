@@ -13,7 +13,7 @@ public class Rocket : MonoBehaviour {
 	}
 	private void ProcessInput() {
 		if (Input.GetKey(KeyCode.A)) {
-			print("Rotates left");
+			transform.Rotate(Vector3.forward);
 		} else if (Input.GetKey(KeyCode.D)) {
 			print("Rotates right");
 		}
