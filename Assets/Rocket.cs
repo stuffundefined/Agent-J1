@@ -24,6 +24,8 @@ public class Rocket : MonoBehaviour {
 			if (!audioSource.isPlaying) {
 				audioSource.Play();
 			}
+		} else {
+			audioSource.Stop();
 		}
 	}
 }
