@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour {
 	Rigidbody rigidBody;
+	AudioSource audioSource;
 	void Start () {
 		rigidBody = GetComponent<Rigidbody>();
 	}
