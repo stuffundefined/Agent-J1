@@ -11,14 +11,17 @@ public class Rocket : MonoBehaviour {
 		audioSource = GetComponent<AudioSource>();
 	}
 	void Update () {
-		ProcessInput();
+		Rotate();
+		Thrust();
 	}
-	private void ProcessInput() {
+	private void Rotate() {
 		if (Input.GetKey(KeyCode.A)) {
 			transform.Rotate(Vector3.forward);
 		} else if (Input.GetKey(KeyCode.D)) {
 			transform.Rotate(-Vector3.forward);
 		}
+	}
+	void Thrust() {
 		if (Input.GetKey(KeyCode.Space)) {
 			rigidBody.AddRelativeForce(Vector3.up);
 			if (!audioSource.isPlaying) {
