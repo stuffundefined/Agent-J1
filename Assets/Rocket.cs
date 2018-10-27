@@ -15,11 +15,13 @@ public class Rocket : MonoBehaviour {
 		Thrust();
 	}
 	private void Rotate() {
+		rigidBody.freezeRotation = true;
 		if (Input.GetKey(KeyCode.A)) {
 			transform.Rotate(Vector3.forward);
 		} else if (Input.GetKey(KeyCode.D)) {
 			transform.Rotate(-Vector3.forward);
 		}
+		rigidBody.freezeRotation = false;
 	}
 	void Thrust() {
 		if (Input.GetKey(KeyCode.Space)) {
