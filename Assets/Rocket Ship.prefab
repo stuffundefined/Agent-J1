@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 23766046404138702}
   - component: {fileID: 65640375511227734}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Nose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -654,4 +654,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RCSThrust: 90
-  mainThrust: 17
+  mainThrust: 18
