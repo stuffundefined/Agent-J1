@@ -654,4 +654,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RCSThrust: 90
-  mainThrust: 18
+  mainThrust: 20
