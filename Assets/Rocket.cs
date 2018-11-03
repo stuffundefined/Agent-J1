@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour {
 	[SerializeField] float RCSThrust = 100f;
@@ -19,9 +17,8 @@ public class Rocket : MonoBehaviour {
 	private void OnCollisionEnter(Collision collision) {
 		switch(collision.gameObject.tag) {
 			case "Friendly":
-				print("live");
 				break;
-			case "Fuel":
+			case "Finish":
 				print("yay");
 				break;
 			default:
