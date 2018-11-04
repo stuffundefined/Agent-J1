@@ -18,6 +18,9 @@ public class Rocket : MonoBehaviour {
 		}
 	}
 	private void OnCollisionEnter(Collision collision) {
+		if (state != State.Alive) {
+			return;
+		}
 		switch (collision.gameObject.tag) {
 			case "Friendly":
 				break;
