@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 public class Rocket : MonoBehaviour {
 	[SerializeField] float RCSThrust = 100f;
 	[SerializeField] float mainThrust = 100f;
+	[SerializeField] AudioClip mainEngine;
 	Rigidbody rigidBody;
 	AudioSource audioSource;
 	enum State { Alive, Failed, Teleporting };
@@ -13,8 +14,8 @@ public class Rocket : MonoBehaviour {
 	}
 	void Update () {
 		if (state != State.Failed) {
-			Rotate();
-			Thrust();
+			RespondToRotateKeys();
+			RespondToSpace();
 		}
 	}
 	private void OnCollisionEnter(Collision collision) {
@@ -40,7 +41,7 @@ public class Rocket : MonoBehaviour {
 	private void LoadNext() {
 		SceneManager.LoadScene(1);
 	}
-	private void Rotate() {
+	private void RespondToRotateKeys() {
 		rigidBody.freezeRotation = true;
 		float rotationThisFrame = RCSThrust * Time.deltaTime;
 		if (Input.GetKey(KeyCode.A)) {
@@ -50,14 +51,17 @@ public class Rocket : MonoBehaviour {
 		}
 		rigidBody.freezeRotation = false;
 	}
-	void Thrust() {
-			if (Input.GetKey(KeyCode.Space)) {
-				rigidBody.AddRelativeForce(Vector3.up * mainThrust);
-				if (!audioSource.isPlaying) {
-					audioSource.Play();
-				}
-			} else {
-				audioSource.Stop();
-			}
+	private void RespondToSpace() {
+		if (Input.GetKey(KeyCode.Space)) {
+			ApplyThrust();
+		} else {
+			audioSource.Stop();
+		}
+	}
+	private void ApplyThrust() {
+		rigidBody.AddRelativeForce(Vector3.up * mainThrust);
+		if (!audioSource.isPlaying) {
+			audioSource.Play();
+		}
 	}
 }
