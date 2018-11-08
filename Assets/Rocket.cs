@@ -3,7 +3,9 @@ using UnityEngine.SceneManagement;
 public class Rocket : MonoBehaviour {
 	[SerializeField] float RCSThrust = 100f;
 	[SerializeField] float mainThrust = 100f;
-	[SerializeField] AudioClip mainEngine;
+	[SerializeField] AudioClip thrust;
+	[SerializeField] AudioClip death;
+	[SerializeField] AudioClip finish;
 	Rigidbody rigidBody;
 	AudioSource audioSource;
 	enum State { Alive, Failed, Teleporting };
@@ -19,23 +21,31 @@ public class Rocket : MonoBehaviour {
 		}
 	}
 	private void OnCollisionEnter(Collision collision) {
-		if (state != State.Alive) {
-			return;
-		}
+		if (state != State.Alive) { return; }
 		switch (collision.gameObject.tag) {
 			case "Friendly":
 				break;
 			case "Finish":
-				state = State.Teleporting;
-				Invoke("LoadNext", 1f);
+				Succeed();
 				break;
 			default:
-				state = State.Failed;
-				Invoke("Fail", 1f);
+				Fail();
 				break;
 		}
 	}
 	private void Fail() {
+		state = State.Failed;
+		audioSource.Stop();
+		audioSource.PlayOneShot(death);
+		Invoke("GoBack", 1f);
+	}
+	private void Succeed() {
+		state = State.Teleporting;
+		audioSource.Stop();
+		audioSource.PlayOneShot(finish);
+		Invoke("LoadNext", 1f);
+	}
+	private void GoBack() {
 		SceneManager.LoadScene(0);
 	}
 	private void LoadNext() {
@@ -61,7 +71,7 @@ public class Rocket : MonoBehaviour {
 	private void ApplyThrust() {
 		rigidBody.AddRelativeForce(Vector3.up * mainThrust);
 		if (!audioSource.isPlaying) {
-			audioSource.Play();
+			audioSource.PlayOneShot(thrust);
 		}
 	}
 }
