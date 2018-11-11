@@ -3,9 +3,12 @@ using UnityEngine.SceneManagement;
 public class Rocket : MonoBehaviour {
 	[SerializeField] float RCSThrust = 100f;
 	[SerializeField] float mainThrust = 100f;
-	[SerializeField] AudioClip thrust;
-	[SerializeField] AudioClip death;
-	[SerializeField] AudioClip finish;
+	[SerializeField] AudioClip thrustS;
+	[SerializeField] AudioClip deathS;
+	[SerializeField] AudioClip finishS;
+	[SerializeField] ParticleSystem thrustP;
+	[SerializeField] ParticleSystem deathP;
+	[SerializeField] ParticleSystem finishP;
 	Rigidbody rigidBody;
 	AudioSource audioSource;
 	enum State { Alive, Failed, Teleporting };
@@ -36,13 +39,15 @@ public class Rocket : MonoBehaviour {
 	private void Fail() {
 		state = State.Failed;
 		audioSource.Stop();
-		audioSource.PlayOneShot(death);
+		audioSource.PlayOneShot(deathS);
+		deathP.Play();
 		Invoke("GoBack", 1f);
 	}
 	private void Succeed() {
 		state = State.Teleporting;
 		audioSource.Stop();
-		audioSource.PlayOneShot(finish);
+		audioSource.PlayOneShot(finishS);
+		finishP.Play();
 		Invoke("LoadNext", 1f);
 	}
 	private void GoBack() {
@@ -66,12 +71,14 @@ public class Rocket : MonoBehaviour {
 			ApplyThrust();
 		} else {
 			audioSource.Stop();
+			thrustP.Stop();
 		}
 	}
 	private void ApplyThrust() {
 		rigidBody.AddRelativeForce(Vector3.up * mainThrust);
 		if (!audioSource.isPlaying) {
-			audioSource.PlayOneShot(thrust);
+			audioSource.PlayOneShot(thrustS);
 		}
+		thrustP.Play();
 	}
 }
