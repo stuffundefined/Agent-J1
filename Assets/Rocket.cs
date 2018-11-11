@@ -15,7 +15,7 @@ public class Rocket : MonoBehaviour {
 		audioSource = GetComponent<AudioSource>();
 	}
 	void Update () {
-		if (state != State.Failed) {
+		if (state == State.Alive) {
 			RespondToRotateKeys();
 			RespondToSpace();
 		}
