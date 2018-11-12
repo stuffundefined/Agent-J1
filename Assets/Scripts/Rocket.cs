@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 public class Rocket : MonoBehaviour {
 	[SerializeField] float RCSThrust = 100f;
 	[SerializeField] float mainThrust = 100f;
+	[SerializeField] float levelLoadDelay = 2f;
 	[SerializeField] AudioClip thrustS;
 	[SerializeField] AudioClip deathS;
 	[SerializeField] AudioClip finishS;
@@ -41,14 +42,14 @@ public class Rocket : MonoBehaviour {
 		audioSource.Stop();
 		audioSource.PlayOneShot(deathS);
 		deathP.Play();
-		Invoke("GoBack", 1f);
+		Invoke("GoBack", levelLoadDelay);
 	}
 	private void Succeed() {
 		state = State.Teleporting;
 		audioSource.Stop();
 		audioSource.PlayOneShot(finishS);
 		finishP.Play();
-		Invoke("LoadNext", 1f);
+		Invoke("LoadNext", levelLoadDelay);
 	}
 	private void GoBack() {
 		SceneManager.LoadScene(0);

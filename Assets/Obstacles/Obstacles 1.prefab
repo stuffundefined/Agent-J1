@@ -101,7 +101,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1853989218216562}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.867992, y: 2.01, z: 0}
+  m_LocalPosition: {x: -25, y: 2.01, z: 0}
   m_LocalScale: {x: 1.6, y: 11.8, z: 5}
   m_Children: []
   m_Father: {fileID: 4408564886738802}
@@ -311,4 +311,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementVector: {x: 7, y: 0, z: 0}
   period: 10
-  movementFactor: 0.7331441
+  movementFactor: 0
