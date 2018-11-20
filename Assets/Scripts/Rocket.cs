@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 public class Rocket : MonoBehaviour {
 	[SerializeField] float RCSThrust = 100f;
@@ -14,6 +15,7 @@ public class Rocket : MonoBehaviour {
 	AudioSource audioSource;
 	enum State { Alive, Failed, Teleporting };
 	State state = State.Alive;
+	bool collisionsDisabled = false;
 	void Start () {
 		rigidBody = GetComponent<Rigidbody>();
 		audioSource = GetComponent<AudioSource>();
@@ -23,9 +25,19 @@ public class Rocket : MonoBehaviour {
 			RespondToRotateKeys();
 			RespondToSpace();
 		}
+		if (Debug.isDebugBuild) {
+			RespondToDebugKeys();
+		}
+	}
+	private void RespondToDebugKeys() {
+		if (Input.GetKeyDown(KeyCode.L)) {
+			LoadNext();
+		} else if (Input.GetKeyDown(KeyCode.C)) {
+			collisionsDisabled = !collisionsDisabled;
+		}
 	}
 	private void OnCollisionEnter(Collision collision) {
-		if (state != State.Alive) { return; }
+		if (state != State.Alive || collisionsDisabled) { return; }
 		switch (collision.gameObject.tag) {
 			case "Friendly":
 				break;
@@ -55,7 +67,12 @@ public class Rocket : MonoBehaviour {
 		SceneManager.LoadScene(0);
 	}
 	private void LoadNext() {
-		SceneManager.LoadScene(1);
+		int currentScene = SceneManager.GetActiveScene().buildIndex;
+		int nextSceneIndex = currentScene + 1;
+		if (nextSceneIndex == SceneManager.sceneCountInBuildSettings) {
+			nextSceneIndex = 0;
+		}
+		SceneManager.LoadScene(nextSceneIndex);
 	}
 	private void RespondToRotateKeys() {
 		rigidBody.freezeRotation = true;

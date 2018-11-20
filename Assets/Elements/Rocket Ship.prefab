@@ -814,7 +814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RCSThrust: 90
-  mainThrust: 35
+  mainThrust: 40
   levelLoadDelay: 2
   thrustS: {fileID: 8300000, guid: 850cabee40c9daf499817350c5c40c41, type: 3}
   deathS: {fileID: 8300000, guid: dd65632cdadab4745a99cd77bca486cd, type: 3}
