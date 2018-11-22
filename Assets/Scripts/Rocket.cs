@@ -13,11 +13,14 @@ public class Rocket : MonoBehaviour {
 	[SerializeField] ParticleSystem finishP;
 	Rigidbody rigidBody;
 	AudioSource audioSource;
-	bool alive = true;
+	[SerializeField]bool alive = true;
 	bool collisionsDisabled = false;
 	void Start () {
 		rigidBody = GetComponent<Rigidbody>();
 		audioSource = GetComponent<AudioSource>();
+		if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings) {
+			alive = false;
+		}
 	}
 	void Update () {
 		if (alive) {
@@ -26,6 +29,12 @@ public class Rocket : MonoBehaviour {
 		}
 		if (Debug.isDebugBuild) {
 			RespondToDebugKeys();
+		}
+		RespondToQuitKey();
+	}
+	private void RespondToQuitKey() {
+		if (!alive && SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1 && Input.GetKey(KeyCode.Space)) {
+			Application.Quit();
 		}
 	}
 	private void RespondToDebugKeys() {
@@ -53,7 +62,7 @@ public class Rocket : MonoBehaviour {
 		audioSource.Stop();
 		audioSource.PlayOneShot(deathS);
 		deathP.Play();
-		Invoke("GoBack", levelLoadDelay);
+		Invoke("Restart", levelLoadDelay);
 	}
 	private void Succeed() {
 		alive = false;
@@ -62,8 +71,8 @@ public class Rocket : MonoBehaviour {
 		finishP.Play();
 		Invoke("LoadNext", levelLoadDelay);
 	}
-	private void GoBack() {
-		SceneManager.LoadScene(0);
+	private void Restart() {
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 	private void LoadNext() {
 		int currentScene = SceneManager.GetActiveScene().buildIndex;
